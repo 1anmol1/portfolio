@@ -1,0 +1,1531 @@
+/* =========================================================================
+   MASTER STYLESHEET: "Cinematic Modern" Portfolio
+   Theme: Deep Space (Dark Mode) with Aurora Gradients
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1. IMPORTS & FONTS
+   ------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
+
+/* -------------------------------------------------------------------------
+   2. DESIGN TOKEN VARIABLES
+   ------------------------------------------------------------------------- */
+:root {
+  /* -- Backgrounds -- */
+  --bg-void: #030305;
+  /* Deepest Black */
+  --bg-surface: #0e0e12;
+  /* Section Background */
+  --bg-card: #18181b;
+  /* Card Surface */
+
+  /* -- Text Colors -- */
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #52525b;
+
+  /* -- Accent Colors (Aurora Theme) -- */
+  --accent-purple: #a855f7;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-pink: #ec4899;
+
+  /* -- Gradients -- */
+  --gradient-text: linear-gradient(135deg, #e2e8f0 0%, #a855f7 50%, #3b82f6 100%);
+  --gradient-border: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+
+  /* -- Glassmorphism -- */
+  --glass-bg: rgba(20, 20, 25, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 20px;
+
+  /* -- Spacing & Radius -- */
+  --container-width: 1200px;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 8px;
+
+  /* -- Animation Curves -- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --anim-slow: 0.8s var(--ease-out);
+}
+
+/* -------------------------------------------------------------------------
+   3. RESET & GLOBAL STYLES
+   ------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  /* Cinematic Noise Texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+
+  /* HIDE DEFAULT CURSOR */
+  cursor: none !important;
+}
+
+/* Ensure cursor is hidden on all interactive elements too */
+a,
+button,
+input,
+textarea,
+select {
+  cursor: none !important;
+}
+
+/* --- CUSTOM SCROLLBAR --- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 5px;
+  border: 2px solid var(--bg-void);
+  /* Adds padding effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* --- 3D RAINBOW BUTTON --- */
+/* --- CONTINUOUS RAINBOW BORDER BUTTON --- */
+.btn-rainbow-border {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: transparent;
+  border-radius: 9999px;
+  text-decoration: none;
+  z-index: 1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 1. The Spinning Rainbow Gradient Layer */
+.btn-rainbow-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  /* Border thickness (Small & Crisp) */
+  border-radius: inherit;
+  background: conic-gradient(#ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  z-index: -2;
+  animation: border-spin 3s linear infinite;
+  /* Smoother speed */
+}
+
+/* 2. The Inner Mask (Generic dark bg to create the border look) */
+.btn-rainbow-border::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  /* Matches the stroke width logic */
+  background: #18181b;
+  /* Match button/card bg */
+  border-radius: inherit;
+  z-index: -1;
+}
+
+/* Hover: Slight lift and glow */
+.btn-rainbow-border:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes border-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- TEXT SELECTION --- */
+::selection {
+  background: rgba(168, 85, 247, 0.3);
+  /* Purple tint */
+  color: #fff;
+}
+
+/* --- MOBILE VIEW SIMULATION & TOGGLE --- */
+.view-toggle-btn {
+  position: fixed;
+  /* Stick to top right of viewport */
+  top: 30px;
+  right: 30px;
+
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: white;
+  z-index: 9998;
+  /* High but below cursor */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+/* Text Label inside Toggle (Hidden by default) */
+.view-toggle-btn span {
+  display: none;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+
+/* Hero Mode (Pill shape with Text) */
+.view-toggle-btn.hero-mode {
+  width: auto;
+  padding: 0 24px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.view-toggle-btn.hero-mode span {
+  display: block;
+}
+
+.view-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Icon Animation */
+.view-toggle-btn svg {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.view-toggle-btn:hover svg {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.view-toggle-btn.active svg {
+  transform: rotate(360deg);
+}
+
+/* Wrapper Transition (Middle-Out Expansion) */
+.app-wrapper {
+  width: 100%;
+  max-width: 100%;
+  /* Default full width */
+  margin: 0 auto;
+  min-height: 100vh;
+  transition: width 2s cubic-bezier(0.19, 1, 0.22, 1), margin 2s ease-in-out, border-radius 2s ease, transform 2s ease, box-shadow 2s ease;
+  transform-origin: center top;
+  background: var(--bg-void);
+  position: relative;
+}
+
+/* --- SCROLL TO TOP BUTTON --- */
+.scroll-top-btn {
+  position: absolute;
+  /* Relative to app-wrapper */
+  bottom: 30px;
+  right: -100px;
+  /* Hidden off-screen */
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: white;
+  z-index: 900;
+  /* Below cursor, above content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0);
+  /* Remove Y transform interaction */
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Smooth bounce visual */
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  right: 30px;
+  /* Slide in */
+}
+
+.scroll-top-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+  border-color: #fff;
+}
+
+/* Wrapper Transition */
+.app-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  transition: width 2s ease-in-out, margin 2s ease-in-out, border-radius 2s ease, transform 2s ease;
+  transform-origin: top center;
+  background: var(--bg-void);
+  position: relative;
+  /* Context for absolute toggle btn */
+  /* Ensure background is contained */
+  overflow-x: hidden;
+  /* Prevent horizontal scroll from entry animations */
+}
+
+/* The Mobile State */
+.app-wrapper.mobile-simulated {
+  width: 375px;
+  /* Standard Mobile Width */
+  margin: 0 auto;
+  /* Center it (shrink from both sides) */
+  min-height: 100vh;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  /* Subtle boundary */
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: hidden;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  /* Soft shadow, no phone frame */
+  position: relative;
+}
+
+/* Hide toggle on actual mobile devices */
+@media (max-width: 768px) {
+  .view-toggle-btn {
+    display: none !important;
+  }
+
+  /* RESET WRAPPER ON ACTUAL MOBILE 
+     If user resizes browser to mobile width, disable the 'simulated' box constraints 
+     so it fills the screen naturally. 
+  */
+  .app-wrapper.mobile-simulated,
+  .app-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    min-height: 100vh !important;
+  }
+}
+
+/* --- MOBILE NAVBAR IMPROVEMENTS --- */
+@media (max-width: 768px),
+(max-width: 500px) {
+
+  /* Applies to actual mobile and simulated */
+  .navbar {
+    width: 90%;
+    max-width: 360px;
+    /* Slight increase to fit */
+    padding: 12px 10px;
+    /* Reducing side padding */
+    gap: 12px;
+    /* Reducing gap */
+    justify-content: center;
+    /* Center everything */
+    overflow-x: visible;
+    /* No scroll */
+    white-space: normal;
+
+    /* Move to bottom for actual mobile too */
+    top: auto;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .nav-links {
+    gap: 14px;
+    /* Tighter gap between links */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    /* Smaller text */
+    padding: 6px 10px;
+    /* Smaller touch target padding */
+    background: transparent;
+    /* Clean look */
+  }
+
+  .nav-logo {
+    display: none;
+  }
+
+  /* Remove scrollbar hiding since we aren't scrolling */
+  .navbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Force mobile styles when simulated */
+.app-wrapper.mobile-simulated .navbar {
+  width: 90%;
+  max-width: 360px;
+  padding: 12px 10px;
+  gap: 12px;
+  justify-content: center;
+  overflow-x: visible;
+  white-space: normal;
+
+  /* Move to bottom (Animate TOP for sliding effect) */
+  top: calc(100vh - 90px);
+  /* Precise bottom positioning relative to viewport height */
+  bottom: auto;
+  transform: translateX(-50%) translateY(0);
+
+  /* Prevent screen coverage */
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: 80px;
+}
+
+.app-wrapper.mobile-simulated .nav-links {
+  gap: 14px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.app-wrapper.mobile-simulated .nav-link {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+}
+
+/* Fix overlap with navbar in mobile simulation */
+.app-wrapper.mobile-simulated .scroll-top-btn {
+  bottom: 90px !important;
+  /* Above the navbar (approx 60-70px height + 20px spacing) */
+}
+
+/* Fix overlap in actual mobile */
+@media (max-width: 768px) {
+  .scroll-top-btn {
+    bottom: 90px !important;
+  }
+
+  /* Ensure footer has space so buttons aren't covered by bottom navbar */
+  .footer {
+    padding-bottom: 120px !important;
+  }
+
+  /* Prevent navbar from accidentally filling screen */
+  .navbar {
+    height: auto !important;
+    min-height: 0 !important;
+    top: auto !important;
+    bottom: 20px !important;
+  }
+}
+
+/* Ensure space for bottom navbar in simulation so buttons aren't covered */
+.app-wrapper.mobile-simulated .footer,
+.app-wrapper.mobile-simulated .contact,
+.app-wrapper.mobile-simulated .hero {
+  padding-bottom: 140px !important;
+}
+
+/* --- MOBILE NAVBAR SWAP ANIMATION --- */
+
+/* Base transition for navbar in mobile view */
+@media (max-width: 768px) {
+  .navbar {
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+  }
+
+  /* Hidden State: Slide Down (off screen) */
+  .nav-hidden .navbar {
+    transform: translateX(-50%) translateY(200px) !important;
+    /* Move fully down off-screen */
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Visible State: Center Bottom (Normal) */
+  .nav-visible .navbar {
+    transform: translateX(-50%) translateY(0) !important;
+    /* Centered & Up */
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Same for Simulated Mobile */
+.app-wrapper.mobile-simulated .navbar {
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, top 0.5s ease;
+  /* 1s slow rise */
+}
+
+.nav-hidden .app-wrapper.mobile-simulated .navbar {
+  transform: translateX(-50%) translateY(200px) !important;
+  /* Move fully down */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-visible .app-wrapper.mobile-simulated .navbar {
+  transform: translateX(-50%) translateY(0) !important;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.app-wrapper.mobile-simulated .navbar::-webkit-scrollbar {
+  display: none;
+}
+
+.app-wrapper.mobile-simulated .nav-logo {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s var(--ease-out);
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* -------------------------------------------------------------------------
+   4. UTILITY CLASSES
+   ------------------------------------------------------------------------- */
+.container {
+  width: 90%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.section-padding {
+  padding: 100px 0;
+}
+
+.gradient-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+/* -------------------------
+   5. FLOATING NAVIGATION (Fixed & Polished)
+   ------------------------- */
+.navbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  min-width: 320px;
+  padding: 12px 32px;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  z-index: 1000;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  /* Transition for the glow background color change, and mobile movement */
+  transition: border-color 0.4s ease, top 2s ease-in-out, width 2s ease-in-out, max-width 2s ease-in-out, padding 2s ease;
+}
+
+/* Navbar Contact Button Overrides (Clean, No Gradient) */
+.nav-contact-btn.btn-rainbow-border {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 20px !important;
+  padding: 8px 20px !important;
+  font-size: 0.9rem !important;
+  margin-left: 8px;
+  /* Disable the rainbow pseudo-elements */
+}
+
+.nav-contact-btn.btn-rainbow-border::before,
+.nav-contact-btn.btn-rainbow-border::after {
+  display: none !important;
+}
+
+.nav-contact-btn.btn-rainbow-border:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: #fff !important;
+  transform: translateY(-1px);
+}
+
+
+/* --- DYNAMIC SECTION GLOW & GRADIENTS --- */
+/* The ambient light behind the navbar */
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300%;
+  /* Widened significantly */
+  height: 300%;
+  /* Heightened significantly */
+  background: radial-gradient(circle, var(--nav-glow-color, rgba(167, 139, 250, 0.4)) 0%, transparent 60%);
+  opacity: 0.6;
+  filter: blur(80px);
+  /* Smoother blur for larger area */
+  z-index: -1;
+  transition: background 1s ease;
+  pointer-events: none;
+}
+
+/* Default / Hero Glow (Purple) */
+.navbar[data-section="hero"] {
+  --nav-glow-color: rgba(167, 139, 250, 0.5);
+  border-color: rgba(167, 139, 250, 0.2);
+  --active-gradient: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+}
+
+/* About Glow (Blue) */
+.navbar[data-section="about"] {
+  --nav-glow-color: rgba(96, 165, 250, 0.5);
+  border-color: rgba(96, 165, 250, 0.2);
+  --active-gradient: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+}
+
+/* Projects Glow (Orange/Peach) */
+.navbar[data-section="projects"] {
+  --nav-glow-color: rgba(251, 146, 60, 0.5);
+  border-color: rgba(251, 146, 60, 0.2);
+  --active-gradient: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+}
+
+/* Skills Glow (Emerald/Green) */
+.navbar[data-section="skills"] {
+  --nav-glow-color: rgba(52, 211, 153, 0.5);
+  border-color: rgba(52, 211, 153, 0.2);
+  --active-gradient: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+}
+
+/* Contact Glow (Pink/Magenta) */
+.navbar[data-section="contact"] {
+  --nav-glow-color: rgba(244, 114, 182, 0.5);
+  border-color: rgba(244, 114, 182, 0.2);
+  --active-gradient: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  cursor: pointer;
+  margin-right: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #a1a1aa;
+  /* Default Grey */
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+  padding: 4px 0;
+}
+
+/* --- THE LINE INDICATOR LOGIC --- */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  border-radius: 2px;
+  width: 0%;
+  /* Hidden by default */
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 1. HOVER (INACTIVE): Show Grey Dash */
+.nav-link:not(.active):hover {
+  color: #fff;
+}
+
+.nav-link:not(.active):hover::after {
+  width: 12px;
+  /* Small dash */
+  background: #52525b;
+}
+
+/* 2. ACTIVE: Show Gradient Text + Full Gradient Line */
+.nav-link.active {
+  display: inline-block;
+
+  /* DYNAMIC GRADIENT from Parent State */
+  background: var(--active-gradient, linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%));
+
+  /* Clips background to text shape */
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Makes text transparent so gradient shows through */
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  font-weight: 700;
+}
+
+/* The Line below the Active Link */
+.nav-link.active::after {
+  width: 100%;
+  /* Full width */
+  background: var(--active-gradient, linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%));
+  box-shadow: 0 2px 10px rgba(96, 165, 250, 0.3);
+}
+
+/* -------------------------------------------------------------------------
+   6. COMPONENT: HERO SECTION
+   ------------------------------------------------------------------------- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  padding-top: 80px;
+  /* Account for navbar */
+}
+
+/* Floating Orbs */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.4;
+  z-index: -1;
+  animation: floatOrb 10s infinite alternate ease-in-out;
+}
+
+.hero-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent-purple);
+  top: -10%;
+  left: -10%;
+}
+
+.hero-orb-2 {
+  width: 500px;
+  height: 500px;
+  background: var(--accent-blue);
+  bottom: -10%;
+  right: -10%;
+  animation-delay: -5s;
+}
+
+.hero-orb-3 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent-pink);
+  top: 40%;
+  right: 20%;
+  opacity: 0.2;
+  animation-duration: 15s;
+}
+
+.hero-content {
+  z-index: 2;
+  max-width: 800px;
+}
+
+/* Status Badge */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero-badge-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  /* Green status */
+  border-radius: 50%;
+  box-shadow: 0 0 10px #10b981;
+}
+
+/* Typography */
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+  animation: fadeUp 0.8s var(--ease-out) 0.3s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero-description {
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  color: var(--text-secondary);
+  max-width: 60ch;
+  margin: 0 auto 48px;
+  animation: fadeUp 0.8s var(--ease-out) 0.4s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Buttons */
+
+
+.hero-cta {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 32px;
+  position: relative;
+  z-index: 10;
+  /* Ensure interactivity */
+  animation: fadeUp 0.8s var(--ease-out) 0.5s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.btn {
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: var(--text-primary);
+  color: var(--bg-void);
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+  background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+  border-color: transparent;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(5px);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+/* -------------------------------------------------------------------------
+   7. COMPONENT: ABOUT SECTION
+   ------------------------------------------------------------------------- */
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.about-text h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 24px;
+}
+
+.about-text p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 32px;
+}
+
+/* Stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  padding: 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  display: block;
+}
+
+/* About Image */
+/* About Image Container (Larger Spinning Gradient) */
+.about-profile-container {
+  position: relative;
+  width: 350px;
+  /* Larger for About Section */
+  height: 350px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 6px;
+  /* Space for the gradient border */
+  background: linear-gradient(135deg, #a855f7, #3b82f6, #06b6d4);
+  box-shadow: 0 0 60px rgba(168, 85, 247, 0.3);
+  overflow: hidden;
+}
+
+/* The Spinning Gradient Border (Reuse animation) */
+.about-profile-container::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(transparent,
+      #a855f7,
+      #3b82f6,
+      #06b6d4,
+      #a855f7);
+  animation: border-spin 5s linear infinite;
+  /* Slower spin for large size */
+  z-index: 0;
+}
+
+.about-profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+  border: 6px solid var(--bg-card);
+  /* Thicker separation */
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .about-profile-container {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+.about-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+/* -------------------------------------------------------------------------
+   8. COMPONENT: PROJECTS SECTION (Bento Grid)
+   ------------------------------------------------------------------------- */
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 3rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 64px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 32px;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Spotlight Effect Layer */
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  display: block;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.06),
+      transparent 40%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.15);
+  /* Slightly brighter border */
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.project-image {
+  height: 200px;
+  background: #000;
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.project-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: linear-gradient(45deg, #1e1e24, #2d2d35);
+}
+
+.project-category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-purple);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.project-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.project-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+/* Metrics Row inside card */
+.project-metrics {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: 16px;
+}
+
+.metric-value {
+  display: block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+/* Tags */
+.project-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+.project-link {
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.project-link:hover {
+  gap: 10px;
+  /* sliding arrow effect */
+}
+
+/* -------------------------------------------------------------------------
+   9. COMPONENT: SKILLS SECTION (Marquee & Grid)
+   ------------------------------------------------------------------------- */
+.skills {
+  overflow: hidden;
+}
+
+.marquee-wrapper {
+  margin-bottom: 64px;
+  /* Fade effect on edges */
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-content {
+  display: flex;
+  gap: 64px;
+  width: max-content;
+  /* Moves exactly 50% (the length of one full set) to create seamless loop */
+  animation: scrollLeft 30s linear infinite;
+}
+
+/* Define the scroll animation */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.skill-item {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  /* REMOVED: color: transparent & stroke */
+  /* Added: Default fallback color, actual color is set inline via React */
+  color: #fff;
+  white-space: nowrap;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.skill-category {
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.skill-category-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--accent-blue);
+  /* Adjusted to variable */
+}
+
+.skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-list-item {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  padding-left: 16px;
+  position: relative;
+}
+
+.skill-list-item::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: var(--accent-purple);
+}
+
+/* -------------------------------------------------------------------------
+   10. COMPONENT: CONTACT
+   ------------------------------------------------------------------------- */
+.contact-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-description {
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Brand Specific Hovers (via aria-label added in React) */
+.contact-link[aria-label="Email"]:hover {
+  background: linear-gradient(135deg, #EA4335, #D14836);
+  /* Gmail Red */
+  border-color: #EA4335;
+}
+
+.contact-link[aria-label="LinkedIn"]:hover {
+  background: linear-gradient(135deg, #0077b5, #005582);
+  /* LinkedIn Blue */
+  border-color: #0077b5;
+}
+
+.contact-link[aria-label="GitHub"]:hover {
+  background: linear-gradient(135deg, #2b3137, #181717);
+  /* GitHub Dark */
+  border-color: #ffffff;
+}
+
+.contact-link:hover {
+  /* Default fallback replaced by specific rules above */
+  color: var(--text-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* -------------------------------------------------------------------------
+   11. COMPONENT: FOOTER
+   ------------------------------------------------------------------------- */
+.footer {
+  border-top: 1px solid var(--glass-border);
+  padding: 40px 0;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 0.9rem;
+}
+
+/* -------------------------------------------------------------------------
+   12. KEYFRAME ANIMATIONS
+   ------------------------------------------------------------------------- */
+@keyframes slideDown {
+  from {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatOrb {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(30px, -30px);
+  }
+}
+
+@keyframes scrollLeft {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   13. MEDIA QUERIES (Mobile Adaptation)
+   ------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .stats-grid {
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 12px;
+  }
+
+  /* Make Nav Scrollable or simpler on mobile */
+  /* Mobile Responsive */
+  /* Navbar styles are handled in the main block above to ensure consistency with simulation */
+}
+
+/* -------------------------------------------------------------------------
+   14. CINEMATIC CURSOR (Dot + Glass Ring)
+   ------------------------------------------------------------------------- */
+
+/* The Lead Dot */
+#cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  /* Above everything including toggle btn */
+  transition: opacity 0.3s ease;
+  mix-blend-mode: difference;
+}
+
+/* The Following Ring */
+#cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  /* Above everything */
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+  mix-blend-mode: difference;
+}
+
+/* The Trailing Glass Ring */
+#cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+
+  /* Liquid Glass Ring Effect */
+  background: transparent;
+  /* Totally transparent center */
+
+  /* Glossy Border */
+  border: 2px solid rgba(255, 255, 255, 0.25);
+
+  /* Inner and Outer Glow for Liquid Feel */
+  box-shadow:
+    0 0 15px rgba(255, 255, 255, 0.2),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
+
+  backdrop-filter: blur(0px);
+  /* Clear center for reading text */
+  -webkit-backdrop-filter: blur(0px);
+
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    height 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Hover State (Scaling) */
+#cursor-ring.hover {
+  width: 60px;
+  height: 60px;
+  background: var(--glass-bg);
+  border-color: var(--accent-purple);
+}
+
+/* Custom Cursor States */
+#cursor-ring.view,
+#cursor-ring.download,
+#cursor-ring.link {
+  width: 80px;
+  height: 80px;
+  background: #ffffff;
+  border-color: #ffffff;
+  mix-blend-mode: difference;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 1.2rem;
+  /* Icon size */
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+#cursor-ring.view {
+  width: 100px;
+  /* Wider for text */
+  height: 100px;
+  border-radius: 50%;
+}
+
+#cursor-ring.link {
+  width: 60px;
+  height: 60px;
+}
+
+#cursor-ring.download {
+  width: 60px;
+  height: 60px;
+}
+
+/* Active Click State (Optional) */
+#cursor-ring.active {
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+/* --- SCROLL REVEAL ANIMATION --- */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
