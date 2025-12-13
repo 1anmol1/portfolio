@@ -36,7 +36,7 @@ const portfolioData = {
     linkedin: "https://www.linkedin.com/in/patil-anmol/",
     github: "https://github.com/1anmol1",
     resume: "/Resume - Anmol Patil.pdf",
-    profileImage: "/profile_photo.png"
+
   }
 };
 

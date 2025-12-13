@@ -61,19 +61,7 @@ function About() {
             <div className="stat-card">
               <span className="stat-number" data-value="8" data-suffix="m">0</span>
               <span className="stat-label">Internship Exp</span>
-      
-        {/* Image Side */}
-        <div className="about-image reveal-section">
-          <div className="about-profile-container">
-            <img
-              src={portfolioData.contact.profileImage}
-              alt={portfolioData.name}
-              className="about-profile-img"
-            />
-          </div>
-        </div>
-
-      </div>
+            </div>
           </div>
         </div>
 
