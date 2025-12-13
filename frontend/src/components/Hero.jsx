@@ -1,5 +1,6 @@
 import React from "react";
 import portfolioData from "../data/portfolioData.jsx";
+import ScrollReveal from "./ScrollReveal.jsx";
 
 function Hero() {
   return (
@@ -10,32 +11,40 @@ function Hero() {
       <div className="hero-orb hero-orb-3"></div>
 
       <div className="hero-content container">
-        <div className="hero-badge">
-          <span className="hero-badge-dot"></span>
-          Available for Opportunities
-        </div>
+        <ScrollReveal>
+          <div className="hero-badge">
+            <span className="hero-badge-dot"></span>
+            Available for Opportunities
+          </div>
+        </ScrollReveal>
 
-        <h1>
-          Hi, I'm <span className="gradient-text">{portfolioData.name}</span>
-        </h1>
+        <ScrollReveal delay={0.1}>
+          <h1>
+            Hi, I'm <span className="gradient-text">{portfolioData.name}</span>
+          </h1>
+        </ScrollReveal>
 
-        <p className="hero-description">{portfolioData.title}</p>
+        <ScrollReveal delay={0.2}>
+          <p className="hero-description">{portfolioData.title}</p>
+        </ScrollReveal>
 
-        <div className="hero-cta">
-          <a
-            href={portfolioData.contact.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary"
-            data-cursor="download"
-          >
-            <span>Resume</span>
-          </a>
+        <ScrollReveal delay={0.3}>
+          <div className="hero-cta">
+            <a
+              href={portfolioData.contact.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary"
+              data-cursor="download"
+            >
+              <span>Resume</span>
+            </a>
 
-          <a href="#contact" className="btn btn-secondary">
-            Contact Me
-          </a>
-        </div>
+            <a href="#contact" className="btn btn-secondary">
+              Contact Me
+            </a>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
