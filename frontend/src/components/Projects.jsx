@@ -28,10 +28,9 @@ function Projects() {
               onMouseMove={handleMouseMove}
               data-cursor="view"
             >
-              {/* Image Side */}
               <div className="project-image">
                 <img
-                  src={`https://placehold.co/600x400/18181b/a1a1aa?text=${encodeURIComponent(proj.name)}`}
+                  src={proj.image || `https://placehold.co/600x400/18181b/a1a1aa?text=${encodeURIComponent(proj.name)}`}
                   alt={proj.name}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
