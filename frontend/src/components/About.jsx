@@ -1,4 +1,3 @@
-```javascript
 import React from "react";
 import portfolioData from "../data/portfolioData.jsx";
 
@@ -31,7 +30,7 @@ function About() {
 
     document.querySelectorAll('.stat-number').forEach(el => observer.observe(el));
     return () => observer.disconnect();
-  },[]);
+  }, []);
 
   return (
     <section id="about" className="about section-padding">
@@ -70,5 +69,5 @@ function About() {
   );
 }
 
+
 export default About;
-```
