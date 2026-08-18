@@ -1,6 +1,6 @@
 import React, { useContext,  useEffect  } from "react";
 import { PortfolioContext } from "../App";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 
 function ArrowLeft() {
@@ -22,6 +22,7 @@ function ProjectDetail() {
   const portfolioData = useContext(PortfolioContext);
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const project = portfolioData.projects.find((p) => p.id === id);
   const currentIdx = portfolioData.projects.findIndex((p) => p.id === id);
   const nextProject = portfolioData.projects[(currentIdx + 1) % portfolioData.projects.length];
@@ -85,8 +86,14 @@ function ProjectDetail() {
       <div className="project-detail">
         <div className="container">
           {/* Back */}
-          <button className="back-btn fade-up" onClick={() => navigate("/", { state: { restoreScroll: true } })}>
-            <ArrowLeft /> All Projects
+          <button className="back-btn fade-up" onClick={() => {
+            if (location.state?.fromProject) {
+              navigate(`/project/${location.state.fromProjectId}`);
+            } else {
+              navigate("/", { state: { restoreScroll: true } });
+            }
+          }}>
+            <ArrowLeft /> {location.state?.fromProject ? location.state.fromProject : "All Projects"}
           </button>
 
           {/* Header */}
@@ -182,7 +189,9 @@ function ProjectDetail() {
             <p className="section-label">Next Project</p>
             <button
               className="next-project-btn"
-              onClick={() => navigate(`/project/${nextProject.id}`)}
+              onClick={() => navigate(`/project/${nextProject.id}`, {
+                state: { fromProject: project.name, fromProjectId: project.id }
+              })}
             >
               <span className="next-project-label">
                 {nextProject.name} →
