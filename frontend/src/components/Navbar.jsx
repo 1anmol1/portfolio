@@ -89,7 +89,7 @@ function Navbar({ visible }) {
       {/* ── Desktop top nav ─────────────────────────────────── */}
       <div className={`nav-wrapper ${visible || !isHome ? "visible" : "hidden"}`}>
         <nav className="navbar">
-          <Link to="/" className="nav-logo-link">AP</Link>
+          <Link to="/" className="nav-logo-link">Hero</Link>
 
           {NAV_ITEMS.map(({ label, href }) => (
             <a key={href} href={href} className="nav-link">{label}</a>
