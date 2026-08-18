@@ -37,7 +37,7 @@ function About() {
                       <div>
                         <div className="timeline-role">{edu.school}</div>
                         <div className="timeline-company">{edu.degree}</div>
-                        <div className="timeline-score" style={{ marginTop: 6, fontWeight: "bold", fontSize: "1.05rem", color: "var(--green)" }}>{edu.score}</div>
+                        <div className="timeline-score" style={{ marginTop: 6, fontWeight: "bold", fontSize: "1.25rem", color: "var(--green)" }}>{edu.score}</div>
                       </div>
                       <div className="timeline-duration">{edu.duration}</div>
                     </div>
