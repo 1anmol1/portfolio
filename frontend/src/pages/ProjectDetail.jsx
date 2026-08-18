@@ -50,7 +50,7 @@ function ProjectDetail() {
     return (
       <div className="container" style={{ paddingTop: 140, textAlign: "center" }}>
         <p style={{ color: "var(--text-2)", marginBottom: 24 }}>Project not found.</p>
-        <button className="btn btn-ghost" onClick={() => navigate("/")}>← Go back</button>
+        <button className="btn btn-ghost" onClick={() => window.history.length > 2 ? navigate(-1) : navigate("/")}>← Go back</button>
       </div>
     );
   }
@@ -69,7 +69,7 @@ function ProjectDetail() {
       <div className="project-detail">
         <div className="container">
           {/* Back */}
-          <button className="back-btn fade-up" onClick={() => navigate("/")}>
+          <button className="back-btn fade-up" onClick={() => window.history.length > 2 ? navigate(-1) : navigate("/")}>
             <ArrowLeft /> All Projects
           </button>
 
