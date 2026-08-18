@@ -26,7 +26,19 @@ function Home() {
     );
     document.querySelectorAll(".fade-up").forEach((el) => revealObserver.observe(el));
 
+    // Restore scroll position
+    const savedScroll = sessionStorage.getItem("portfolio-scroll-pos");
+    if (savedScroll) {
+      // Force instantaneous scroll restoration
+      window.scrollTo({ top: parseInt(savedScroll, 10), behavior: "instant" });
+      setTimeout(() => {
+        lenis.scrollTo(parseInt(savedScroll, 10), { immediate: true });
+      }, 50);
+    }
+
     return () => {
+      // Save scroll position right before we unmount (e.g. clicking a project)
+      sessionStorage.setItem("portfolio-scroll-pos", window.scrollY.toString());
       lenis.destroy();
       revealObserver.disconnect();
     };

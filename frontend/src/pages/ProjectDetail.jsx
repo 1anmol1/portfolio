@@ -27,12 +27,20 @@ function ProjectDetail() {
   const nextProject = portfolioData.projects[(currentIdx + 1) % portfolioData.projects.length];
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.documentElement.scrollTop = 0;
+    
     const lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
-    lenis.scrollTo(0, { immediate: true });
+    
+    // Defer the Lenis scroll slightly to ensure it takes precedence over its own initial state
+    setTimeout(() => {
+      lenis.scrollTo(0, { immediate: true });
+    }, 50);
+
     const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
 

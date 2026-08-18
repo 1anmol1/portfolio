@@ -7,6 +7,7 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     if (navType !== "POP") {
+      sessionStorage.removeItem("portfolio-scroll-pos");
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
