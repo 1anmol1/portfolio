@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import ProjectDetail from "./pages/ProjectDetail.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 import "./App.css";
 
 // Theme context so any component can read/toggle
@@ -51,6 +52,7 @@ function App() {
     <PortfolioContext.Provider value={portfolioData}>
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/project/:id" element={<ProjectDetail />} />
