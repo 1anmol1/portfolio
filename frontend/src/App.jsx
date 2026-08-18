@@ -28,7 +28,7 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
+    const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5005";
     // Fetch portfolio data from Node backend
     fetch(`${apiUrl}/api/portfolio`)
       .then((res) => res.json())

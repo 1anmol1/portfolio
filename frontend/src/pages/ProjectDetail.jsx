@@ -27,12 +27,12 @@ function ProjectDetail() {
   const nextProject = portfolioData.projects[(currentIdx + 1) % portfolioData.projects.length];
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     const lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
+    lenis.scrollTo(0, { immediate: true });
     const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
 
