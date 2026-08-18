@@ -2,72 +2,76 @@ import React from "react";
 import portfolioData from "../data/portfolioData.jsx";
 
 function About() {
-  // Animation for metrics
-  React.useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const target = entry.target;
-          const endValue = parseInt(target.getAttribute('data-value'));
-          const suffix = target.getAttribute('data-suffix') || '';
-          let startValue = 0;
-          const duration = 2000;
-          const increment = endValue / (duration / 16); // 60fps
-
-          const timer = setInterval(() => {
-            startValue += increment;
-            if (startValue >= endValue) {
-              target.textContent = endValue + suffix;
-              clearInterval(timer);
-            } else {
-              target.textContent = Math.floor(startValue) + suffix;
-            }
-          }, 16);
-          observer.unobserve(target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.stat-number').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section id="about" className="about section-padding">
-      <div className="container about-content">
+    <section id="about" className="section">
+      <div className="container">
+        <p className="section-label fade-up">About</p>
+        <h2 className="section-headline fade-up">{portfolioData.name}</h2>
+        <p className="section-body fade-up">{portfolioData.about}</p>
 
-        {/* Text Side */}
-        <div className="about-text">
-          <h2 className="section-title">About Me</h2>
-          <p>{portfolioData.about}</p>
-
-          <p style={{ color: "var(--text-secondary)", marginBottom: "2rem" }}>
-            {portfolioData.education}
-          </p>
-
-          {/* Cinematic Stats Grid */}
-          <div className="stats-grid">
-            <div className="stat-card">
-              <span className="stat-number" data-value="3" data-suffix="+">0</span>
-              <span className="stat-label">Years Coding</span>
+        <div className="about-grid">
+          {/* Left: Stats + Education */}
+          <div>
+            <div className="stats-row">
+              <div className="stat-cell">
+                <div className="stat-number">{portfolioData.stats.yearsCoding}</div>
+                <div className="stat-label">Years Coding</div>
+              </div>
+              <div className="stat-cell">
+                <div className="stat-number">{portfolioData.stats.projectsBuilt}</div>
+                <div className="stat-label">Projects Built</div>
+              </div>
+              <div className="stat-cell">
+                <div className="stat-number">{portfolioData.stats.internshipExp}</div>
+                <div className="stat-label">Industry Exp</div>
+              </div>
             </div>
 
-            <div className="stat-card">
-              <span className="stat-number" data-value="10" data-suffix="+">0</span>
-              <span className="stat-label">Projects Built</span>
+            <div style={{ marginTop: 48 }}>
+              <p className="section-label" style={{ marginBottom: 20 }}>Education</p>
+              <div className="timeline">
+                {portfolioData.education.map((edu, i) => (
+                  <div className="timeline-item fade-up" key={i}>
+                    <div className="timeline-header">
+                      <div>
+                        <div className="timeline-role">{edu.school}</div>
+                        <div className="timeline-company">{edu.degree}</div>
+                        <div className="timeline-company" style={{ marginTop: 4, color: "var(--text-3)" }}>{edu.score}</div>
+                      </div>
+                      <div className="timeline-duration">{edu.duration}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
+          </div>
 
-            <div className="stat-card">
-              <span className="stat-number" data-value="8" data-suffix="m">0</span>
-              <span className="stat-label">Internship Exp</span>
+          {/* Right: Experience */}
+          <div>
+            <p className="section-label" style={{ marginBottom: 20 }}>Experience</p>
+            <div className="timeline">
+              {portfolioData.experience.map((exp, i) => (
+                <div className="timeline-item fade-up" key={i}>
+                  <div className="timeline-header">
+                    <div>
+                      <div className="timeline-role">{exp.role}</div>
+                      <div className="timeline-company">{exp.company} · {exp.location}</div>
+                    </div>
+                    <div className="timeline-duration">{exp.duration}</div>
+                  </div>
+                  <ul className="timeline-points">
+                    {exp.points.map((pt, j) => (
+                      <li key={j}>{pt}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
 }
-
 
 export default About;

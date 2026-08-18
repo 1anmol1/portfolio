@@ -4,11 +4,13 @@ import portfolioData from "../data/portfolioData.jsx";
 function Footer() {
   return (
     <footer className="footer">
-      <div className="container footer-content">
-        <div className="footer-logo">Anmol</div>
-        <p style={{ color: "var(--text-tertiary)", fontSize: "0.9rem" }}>
-          © {new Date().getFullYear()} {portfolioData.name}. All rights reserved.
-        </p>
+      <div className="container footer-inner">
+        <div className="footer-left">
+          © {new Date().getFullYear()} {portfolioData.name}. Built with React.
+        </div>
+        <div className="footer-right">
+          Designed & developed by Anmol Patil
+        </div>
       </div>
     </footer>
   );

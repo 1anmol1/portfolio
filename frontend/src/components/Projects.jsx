@@ -1,73 +1,98 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import portfolioData from "../data/portfolioData.jsx";
 
-function Projects() {
-  // Logic for the spotlight hover effect defined in CSS
-  const handleMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
-  };
+const COLOR_MAP = {
+  "#10b981": "green",
+  "#3b82f6": "blue",
+  "#a855f7": "purple",
+};
+
+function ArrowUpRight() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ProjectCard({ project, isFirst }) {
+  const navigate = useNavigate();
+  const colorKey = COLOR_MAP[project.color] || "blue";
 
   return (
-    <section id="projects" className="projects section-padding">
+    <div
+      className="project-card fade-up"
+      data-color={colorKey}
+      onClick={() => navigate(`/project/${project.id}`)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && navigate(`/project/${project.id}`)}
+    >
+      {/* Image */}
+      <div className="project-card-image">
+        {project.image ? (
+          <img src={project.image} alt={project.name} loading="lazy" />
+        ) : (
+          <div
+            className="project-card-placeholder"
+            style={{
+              background: `linear-gradient(135deg, ${project.color}14, ${project.color}06)`,
+              color: project.color,
+              fontSize: isFirst ? "clamp(2rem, 5vw, 3.5rem)" : "clamp(1.5rem, 3vw, 2.5rem)",
+            }}
+          >
+            {project.name}
+          </div>
+        )}
+      </div>
+
+      {/* Body */}
+      <div className="project-card-body">
+        <div className="project-card-header">
+          <div>
+            <div className="project-card-name">{project.name}</div>
+            <div className="project-card-subtitle">{project.subtitle}</div>
+          </div>
+          <div className="project-arrow">
+            <ArrowUpRight />
+          </div>
+        </div>
+
+        <p className="project-card-desc">{project.shortDescription}</p>
+
+        <div className="project-tags">
+          {project.tags.slice(0, isFirst ? 7 : 4).map((tag, i) => (
+            <span className="tag" key={i}>{tag}</span>
+          ))}
+          {project.tags.length > (isFirst ? 7 : 4) && (
+            <span className="tag">+{project.tags.length - (isFirst ? 7 : 4)}</span>
+          )}
+        </div>
+
+        {project.achievement && (
+          <div className="project-achievement">
+            🏆 {project.achievement}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Projects() {
+  return (
+    <section id="projects" className="section">
       <div className="container">
-        <h2 className="section-title">Featured Projects</h2>
-        <p className="section-subtitle">
-          Real-world solutions built with the MERN stack and AI agents.
+        <p className="section-label fade-up">Selected Works</p>
+        <h2 className="section-headline fade-up">Projects</h2>
+        <p className="section-body fade-up">
+          End-to-end products built with care — from initial design to production deployment.
         </p>
 
         <div className="projects-grid">
-          {portfolioData.projects.map((proj, index) => (
-            <div
-              className="project-card"
-              key={index}
-              onMouseMove={handleMouseMove}
-              data-cursor="view"
-            >
-              <div className="project-image">
-                <img
-                  src={proj.image || `https://placehold.co/600x400/18181b/a1a1aa?text=${encodeURIComponent(proj.name)}`}
-                  alt={proj.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
-
-              {/* Info Side */}
-              <div className="project-info">
-                <span className="project-category">Full Stack Dev</span>
-
-                <h3 className="project-title">{proj.name}</h3>
-
-                <p className="project-description">{proj.description}</p>
-
-                <div className="project-metrics">
-                  <div className="metric">
-                    <span className="metric-value">React</span>
-                    <span className="metric-label">Frontend</span>
-                  </div>
-                  <div className="metric">
-                    <span className="metric-value">Node</span>
-                    <span className="metric-label">Backend</span>
-                  </div>
-                </div>
-
-                <div className="project-tags">
-                  {/* Assuming generic MERN tags if not in individual project data */}
-                  <span className="tag">MongoDB</span>
-                  <span className="tag">Express</span>
-                  <span className="tag">React</span>
-                  <span className="tag">Node.js</span>
-                </div>
-
-                <a href={portfolioData.contact.github} target="_blank" rel="noopener noreferrer" className="project-link">
-                  View Code →
-                </a>
-              </div>
-            </div>
+          {portfolioData.projects.map((project, i) => (
+            <ProjectCard key={project.id} project={project} isFirst={i === 0} />
           ))}
         </div>
       </div>
