@@ -1,7 +1,8 @@
-import React from "react";
-import portfolioData from "../data/portfolioData.jsx";
+import React, { useContext } from "react";
+import { PortfolioContext } from "../App";
 
 function Footer() {
+  const portfolioData = useContext(PortfolioContext);
   return (
     <footer className="footer">
       <div className="container footer-inner">

@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useContext,  useEffect  } from "react";
+import { PortfolioContext } from "../App";
 import { useParams, useNavigate } from "react-router-dom";
 import Lenis from "lenis";
-import portfolioData from "../data/portfolioData.jsx";
 
 function ArrowLeft() {
   return (
@@ -19,6 +19,7 @@ function ExternalLink() {
 }
 
 function ProjectDetail() {
+  const portfolioData = useContext(PortfolioContext);
   const { id } = useParams();
   const navigate = useNavigate();
   const project = portfolioData.projects.find((p) => p.id === id);

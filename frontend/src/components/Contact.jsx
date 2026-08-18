@@ -1,11 +1,5 @@
-import React from "react";
-import portfolioData from "../data/portfolioData.jsx";
-
-const SOCIALS = [
-  { label: "LinkedIn", href: portfolioData.contact.linkedin },
-  { label: "GitHub", href: portfolioData.contact.github },
-  { label: "LeetCode", href: portfolioData.contact.leetcode },
-];
+import React, { useContext } from "react";
+import { PortfolioContext } from "../App";
 
 function ExternalIcon() {
   return (
@@ -16,6 +10,12 @@ function ExternalIcon() {
 }
 
 function Contact() {
+  const portfolioData = useContext(PortfolioContext);
+  const socialLinks = [
+    { label: "LinkedIn", href: portfolioData.contact.linkedin },
+    { label: "GitHub", href: portfolioData.contact.github },
+    { label: "LeetCode", href: portfolioData.contact.leetcode },
+  ];
   return (
     <section id="contact" className="contact-section">
       <div className="contact-glow" />
@@ -29,7 +29,7 @@ function Contact() {
         </a>
 
         <div className="contact-social-row fade-up">
-          {SOCIALS.map((s) => (
+          {socialLinks.map((s) => (
             <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social-link">
               {s.label} <ExternalIcon />
             </a>

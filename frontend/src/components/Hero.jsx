@@ -1,7 +1,8 @@
-import React from "react";
-import portfolioData from "../data/portfolioData.jsx";
+import React, { useContext } from "react";
+import { PortfolioContext } from "../App";
 
 function Hero() {
+  const portfolioData = useContext(PortfolioContext);
   return (
     <section id="hero" className="hero">
       {/* Background Video */}

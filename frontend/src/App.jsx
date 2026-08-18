@@ -27,9 +27,8 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
-    // Fetch portfolio data from Node backend
-    fetch(`${apiUrl}/api/portfolio`)
+    // Fetch portfolio data from Vercel Serverless Function
+    fetch("/api/portfolio")
       .then((res) => res.json())
       .then((data) => {
         setPortfolioData(data);

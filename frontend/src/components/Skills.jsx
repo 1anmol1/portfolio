@@ -1,5 +1,5 @@
-import React from "react";
-import portfolioData from "../data/portfolioData.jsx";
+import React, { useContext } from "react";
+import { PortfolioContext } from "../App";
 
 const SKILL_GROUPS = [
   { label: "Languages", key: "languages" },
@@ -9,6 +9,7 @@ const SKILL_GROUPS = [
 ];
 
 function Skills() {
+  const portfolioData = useContext(PortfolioContext);
   const { skills, achievements } = portfolioData;
 
   return (

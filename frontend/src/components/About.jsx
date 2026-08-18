@@ -1,7 +1,8 @@
-import React from "react";
-import portfolioData from "../data/portfolioData.jsx";
+import React, { useContext } from "react";
+import { PortfolioContext } from "../App";
 
 function About() {
+  const portfolioData = useContext(PortfolioContext);
   return (
     <section id="about" className="section">
       <div className="container">

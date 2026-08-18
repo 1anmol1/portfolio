@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { PortfolioContext } from "../App";
 import { useNavigate } from "react-router-dom";
-import portfolioData from "../data/portfolioData.jsx";
 
 const COLOR_MAP = {
   "#10b981": "green",
@@ -81,6 +81,7 @@ function ProjectCard({ project, isFirst }) {
 }
 
 function Projects() {
+  const portfolioData = useContext(PortfolioContext);
   return (
     <section id="projects" className="section">
       <div className="container">

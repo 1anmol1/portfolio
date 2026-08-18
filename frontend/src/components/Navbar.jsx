@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
+import { PortfolioContext } from "../App";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeContext } from "../App.jsx";
-import portfolioData from "../data/portfolioData.jsx";
 
 const NAV_ITEMS = [
   { label: "About",    href: "/#about" },
@@ -79,6 +79,7 @@ const MOBILE_NAV = [
 
 /* ── Navbar component ────────────────────────────────────────── */
 function Navbar({ visible }) {
+  const portfolioData = useContext(PortfolioContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const location = useLocation();
   const isHome = location.pathname === "/";
