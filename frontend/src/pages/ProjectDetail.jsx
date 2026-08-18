@@ -41,8 +41,12 @@ function ProjectDetail() {
       lenis.scrollTo(0, { immediate: true });
     }, 50);
 
-    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
+    let rafId;
+    const raf = (time) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
 
     // Scroll-reveal on this page too
     const observer = new IntersectionObserver(
@@ -51,14 +55,18 @@ function ProjectDetail() {
     );
     document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
 
-    return () => { lenis.destroy(); observer.disconnect(); };
+    return () => {
+      lenis.destroy();
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
   }, [id]);
 
   if (!project) {
     return (
       <div className="container" style={{ paddingTop: 140, textAlign: "center" }}>
         <p style={{ color: "var(--text-2)", marginBottom: 24 }}>Project not found.</p>
-        <button className="btn btn-ghost" onClick={() => window.history.length > 2 ? navigate(-1) : navigate("/")}>← Go back</button>
+        <button className="btn btn-ghost" onClick={() => navigate("/", { state: { restoreScroll: true } })}>← Go back</button>
       </div>
     );
   }
@@ -77,7 +85,7 @@ function ProjectDetail() {
       <div className="project-detail">
         <div className="container">
           {/* Back */}
-          <button className="back-btn fade-up" onClick={() => window.history.length > 2 ? navigate(-1) : navigate("/")}>
+          <button className="back-btn fade-up" onClick={() => navigate("/", { state: { restoreScroll: true } })}>
             <ArrowLeft /> All Projects
           </button>
 

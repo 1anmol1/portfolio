@@ -16,8 +16,12 @@ function Home() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
-    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
+    let rafId;
+    const raf = (time) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
 
     // Scroll-reveal
     const revealObserver = new IntersectionObserver(
@@ -40,6 +44,7 @@ function Home() {
       // Save scroll position right before we unmount (e.g. clicking a project)
       sessionStorage.setItem("portfolio-scroll-pos", window.scrollY.toString());
       lenis.destroy();
+      cancelAnimationFrame(rafId);
       revealObserver.disconnect();
     };
   }, []);
