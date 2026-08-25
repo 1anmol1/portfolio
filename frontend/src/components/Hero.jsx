@@ -5,19 +5,6 @@ function Hero() {
   const portfolioData = useContext(PortfolioContext);
   return (
     <section id="hero" className="hero">
-      {/* Background Video */}
-      <div className="hero-bg-video-wrapper">
-        <div className="hero-bg-overlay" />
-        <video
-          src="/hero-video.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="hero-bg-video"
-        />
-      </div>
-
       {/* Animated background orbs (optional, can keep or remove, but we'll keep them for extra color) */}
       <div className="hero-orb hero-orb-1" />
       <div className="hero-orb hero-orb-2" />
@@ -30,7 +17,14 @@ function Hero() {
           {portfolioData.role}
         </div>
 
-        <h1 className="hero-name">{portfolioData.name}</h1>
+        <video
+          src="/hero-video.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="hero-name-video"
+        />
 
         {/* Left-aligned summary */}
         <p className="hero-sub">{portfolioData.summary}</p>
