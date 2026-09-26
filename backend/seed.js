@@ -145,8 +145,8 @@ const portfolioData = {
   },
   achievements: [
     {
-      title: "Reliance Foundation Undergraduate Scholar",
-      description: "Selected as one of 5,000 scholars nationwide out of 60,000+ applications.",
+      title: "IET India Scholarship Award 2026",
+      description: "Shortlisted for the West Region (Top 150 nationwide out of 48,761 applicants).",
       iconName: "Trophy",
     },
     {
@@ -175,7 +175,7 @@ const portfolioData = {
     linkedin: "https://www.linkedin.com/in/patil-anmol/",
     github: "https://github.com/1anmol1",
     leetcode: "https://leetcode.com/u/1anmol1/",
-    resume: "/Anmol_Patil_Resume_Aug_26.pdf",
+    resume: "/Anmol_Patil_Resume.pdf",
   },
 };
 
