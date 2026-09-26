@@ -28,7 +28,7 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    const apiUrl = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? "https://anmol-portfolio-backend.onrender.com" : "http://localhost:5005");
+    const apiUrl = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? "" : "http://localhost:5005");
     // Fetch portfolio data from Node backend
     fetch(`${apiUrl}/api/portfolio`)
       .then((res) => res.json())
