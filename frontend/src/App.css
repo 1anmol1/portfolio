@@ -533,13 +533,17 @@ footer,
   z-index: 2;
 }
 
-.hero-name-video {
-  width: 100%;
-  max-width: 600px; /* limits how large it gets on desktop */
-  height: auto;
+.hero-name {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 10px 0 20px 0;
+  background: linear-gradient(135deg, var(--text-1) 0%, rgba(16, 185, 129, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   animation: fadeSlideUp 0.9s 0.1s var(--ease) both;
-  margin-bottom: 20px;
-  display: block;
 }
 
 .hero-eyebrow {
@@ -1417,8 +1421,9 @@ footer,
     display: none;
   }
 
-  .hero-name-video {
+  .hero-name {
     margin: 0 auto 20px auto;
+    text-align: center;
   }
 
   .project-card-body {

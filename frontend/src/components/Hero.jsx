@@ -17,14 +17,9 @@ function Hero() {
           {portfolioData.role}
         </div>
 
-        <video
-          src="/hero-video.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="hero-name-video"
-        />
+        <h1 className="hero-name">
+          Anmol Patil
+        </h1>
 
         {/* Left-aligned summary */}
         <p className="hero-sub">{portfolioData.summary}</p>
