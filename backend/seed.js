@@ -175,7 +175,7 @@ const portfolioData = {
     linkedin: "https://www.linkedin.com/in/patil-anmol/",
     github: "https://github.com/1anmol1",
     leetcode: "https://leetcode.com/u/1anmol1/",
-    resume: "/Anmol_Patil_Resume.pdf",
+    resume: "/Anmol_Patil_Resume_Sept_26.pdf",
   },
 };
 

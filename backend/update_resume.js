@@ -11,7 +11,7 @@ async function updateResume() {
 
     const result = await Portfolio.updateOne(
       {},
-      { $set: { "contact.resume": "/Anmol_Patil_Resume.pdf" } }
+      { $set: { "contact.resume": "/Anmol_Patil_Resume_Sept_26.pdf" } }
     );
     console.log("Update Result:", result);
 
